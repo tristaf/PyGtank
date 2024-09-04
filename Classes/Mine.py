@@ -1,6 +1,6 @@
 import pygame
 
-IMG = 'mine2.png'
+IMG = 'mine.png'
 
 from Classes.PyGSprite import PyGSprite 
 

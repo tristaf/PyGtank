@@ -8,12 +8,21 @@ def Main():
     tank = Tank()
     tank.start()
 
-    for i in range(10):
+   
+    
+    for i in range(23):
         tank.right()
+
     for i in range(4):
         tank.up()
-    for i in range(20):
-        tank.right()
+    
+    for i in range(2):
+        tank.down()
+
+    for i in range(10):
+        tank.right()    
+     
+        
     tank.end()
     
  

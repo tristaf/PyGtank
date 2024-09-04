@@ -1,5 +1,6 @@
 import socket
 import threading
+import pygame
 
 from Classes.Player import Player
 
@@ -14,6 +15,7 @@ class TankServer(object):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.host, self.port))
+        self.loopValue = True
 
 
     def parse(self, request):
@@ -21,15 +23,16 @@ class TankServer(object):
         for cmd in commands:
             if self.stop:
                 break;
-            print(cmd)            
+            #print(cmd)            
             if "up" == cmd:
-                self.player.up()
+                self.player.cmdUp()
             elif "down" == cmd:
-                self.player.down()
+                self.player.cmdDown()
             elif "right" == cmd:
-                self.player.right()
+                self.player.cmdRight()
             elif "left" == cmd:
-                self.player.left()
+                self.player.cmdLeft()
+            pygame.time.wait(500)
         self.stop = False
         
     def stopMoves(self):
@@ -37,24 +40,37 @@ class TankServer(object):
             
     def listen(self):
         self.sock.listen(5)
-        while True:
+        while  self.loopValue:
             client, address = self.sock.accept()
             #client.settimeout(60)
-            threading.Thread(target = self.listenToClient,args = (client,address)).start()
+            self.thread2 = threading.Thread(target = self.listenToClient, args = (client,address))
+            self.thread2.start()
+        print("Stop listen1")
+        self.thread2.join()
+        print("Stop listen2")
 
     def listenToClient(self, client, address):
         size = 1024
-        while True:
+        while  self.loopValue:
+            
             try:
                 data = client.recv(size)
                 if data:
                     self.parse(data.decode('ascii'))
                     client.send("Ok".encode('ascii'))
                 else:
-                    raise error('Client disconnected')
+                    raise Exception('Client disconnected')
             except RuntimeError as error:
                 print(error)
                 return False
-
+        client.close()
+        print("Stop listenToClient")
+        
     def start(self):
-         threading.Thread(target = self.listen).start()
+         self.thread1 = threading.Thread(target = self.listen)
+         self.thread1.start()
+
+    def kill(self):
+        self.loopValue = False
+        self.thread1.join()
+        

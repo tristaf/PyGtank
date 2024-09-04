@@ -2,6 +2,8 @@ import pygame
 import os
 import sys
 
+from Classes.Explosion import Explosion
+
 IMG_PATH="img"
 BACK_IMG = "back.png"
 
@@ -21,8 +23,11 @@ class Playground:
      def addObstacles(self, obstacles):
          self.obstacles = obstacles
 
-     def addSprites(self, spritess):
-         self.sprites = spritess
+     def addMines(self, mines):
+         self.mines = mines
+
+     def addSprites(self, sprite):
+         self.sprites = sprite
 
      def linkServer(self, server):
           self.server = server
@@ -32,6 +37,7 @@ class Playground:
           while True:
                for event in pygame.event.get():
                     if event.type == pygame.QUIT:
+                         self.server.kill()
                          sys.exit()
                
                list_obstacles = pygame.sprite.spritecollide(self.player, self.obstacles, False)
@@ -40,7 +46,21 @@ class Playground:
                     self.player.fallBack()
                else:
                     self.sprites.draw(self.screen)
+                    
+               explosion = pygame.sprite.spritecollide(self.player, self.mines, True)
+
+               enemie = pygame.sprite.spritecollide(self.player, self.enemies, True)
                
+               if explosion or enemie:
+                    self.server.stopMoves()
+                    self.player.fallBack()
+                    self.sprites.remove(self.player)
+                    self.sprites.add(Explosion(self.player.rect.center, self))
+               else:
+                    self.sprites.draw(self.screen)
+                    
+                    
+               self.sprites.update()
                pygame.display.update()
                
-               self.clock.tick(10)    
+               self.clock.tick(60)    

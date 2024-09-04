@@ -13,14 +13,14 @@ from Classes.Mine import Mine
 from Classes.Playground import Playground
 from Classes.Direction import Direction
 from Classes.TankServer import TankServer
-
+from Classes.Explosion import Explosion
 
 
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 1800
 NB_ENEMY = 3
-NB_OBSTACLES = 4
-NB_MINES = 5
+NB_OBSTACLES = 2
+NB_MINES = 0
 
 PORT_NUM = 4242
 
@@ -34,6 +34,9 @@ def main():
 
     allSprites = pygame.sprite.Group()
     allSprites.add(player)
+
+    #explosion = Explosion((SCREEN_WIDTH / 2 - 200, SCREEN_HEIGHT / 2), playground)
+    #allSprites.add(explosion)
     
     enemies = pygame.sprite.Group()
     for y in range(1, NB_ENEMY + 1):
@@ -50,11 +53,15 @@ def main():
     playground.addObstacles(stones)
 
     mines =  pygame.sprite.Group()
-    for i in range(0, NB_MINES):
+    for i in range(0, NB_MINES - 1):
         mine = Mine(400 + random.randrange(SCREEN_WIDTH - 400), 100 + random.randrange(SCREEN_HEIGHT - 200), playground)
         mines.add(mine)
         allSprites.add(mine)
-    
+    mine = Mine(1200 , SCREEN_HEIGHT / 2 - 200 , playground)
+    mines.add(mine)
+    allSprites.add(mine)
+    playground.addMines(mines)    
+
     playground.addSprites(allSprites)
     
     TankServer('', PORT_NUM, playground).start()

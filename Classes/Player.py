@@ -5,6 +5,7 @@ from Classes.PyGSprite import PyGSprite
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 1800
 
+IMG = 'player.png'
 
 class Player(PyGSprite):
 
@@ -12,4 +13,4 @@ class Player(PyGSprite):
     WIDTH = 100
     
     def __init__(self, playground):
-        PyGSprite.__init__(self, 'player.png', 50, (SCREEN_HEIGHT - Player.HEIGHT) / 2, playground)
+        PyGSprite.__init__(self, IMG, 50, (SCREEN_HEIGHT - Player.HEIGHT) / 2, playground)

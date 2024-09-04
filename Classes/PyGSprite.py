@@ -1,5 +1,6 @@
 import pygame
 import os
+import queue
 
 from Classes.Direction import Direction
 
@@ -14,66 +15,84 @@ class PyGSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(posX, posY)
         self.direction = Direction.RIGHT
         self.old_pos = self.rect;
+        self.new_pos = (posX, posY)
+        self.moved = False
+        self.cmdFIFO = queue.Queue()
 
-    def rotate(self,old, new):
-        if old == Direction.RIGHT:
-            if new == Direction.LEFT:
+    def rotate(self, direction):
+        if self.direction == Direction.RIGHT:
+            if direction == Direction.LEFT:
                 self.image = pygame.transform.rotate(self.image, 180.0)
-            elif new == Direction.UP:
+            elif direction == Direction.UP:
                 self.image = pygame.transform.rotate(self.image, 90.0)
-            elif new == Direction.DOWN:
+            elif direction == Direction.DOWN:
                 self.image = pygame.transform.rotate(self.image, -90.0)
-        elif old == Direction.UP:
-            if new == Direction.LEFT:
+        elif self.direction == Direction.UP:
+            if direction == Direction.LEFT:
                 self.image = pygame.transform.rotate(self.image, 90.0)
-            elif new == Direction.RIGHT:
+            elif direction == Direction.RIGHT:
                 self.image = pygame.transform.rotate(self.image, -90.0)
-            elif new == Direction.DOWN:
+            elif direction == Direction.DOWN:
                 self.image = pygame.transform.rotate(self.image, 180.0)
-        elif old == Direction.LEFT:
-            if new == Direction.RIGHT:
+        elif self.direction == Direction.LEFT:
+            if direction == Direction.RIGHT:
                 self.image = pygame.transform.rotate(self.image, 180.0)
-            elif  new == Direction.UP:
+            elif  direction == Direction.UP:
                 self.image = pygame.transform.rotate(self.image, -90.0)
-            elif   new == Direction.DOWN:
+            elif   direction == Direction.DOWN:
                 self.image = pygame.transform.rotate(self.image, 90.0)
-        elif old == Direction.DOWN:
-            if new == Direction.LEFT:
+        elif self.direction == Direction.DOWN:
+            if direction == Direction.LEFT:
                 self.image = pygame.transform.rotate(self.image, -90.0)
-            elif  new == Direction.UP:
+            elif  direction == Direction.UP:
                 self.image = pygame.transform.rotate(self.image, 180.0)
-            elif new == Direction.RIGHT:
+            elif direction == Direction.RIGHT:
                 self.image = pygame.transform.rotate(self.image, 90.0)
-
+        self.direction = direction
+        
     def fallBack(self):
-        self.rect = self.old_pos
+       self.rect = self.old_pos
+
         
     def move(self, x, y):
         self.old_pos = self.rect
-        self.playground.screen.blit(self.playground.background, self.rect, self.rect)
+        todel = self.rect
+        todel.size = (100, 100)
+        self.playground.screen.blit(self.playground.background, todel, todel)
         self.rect = self.rect.move(x, y)
-        pygame.time.wait(500)
+        
 
+    def update(self):
+        if not self.cmdFIFO.empty():
+            cmd = self.cmdFIFO.get()
+            if None != cmd:
+                print("update Sprite")
+                cmd()
+            
     def up(self):
-        print("Player up")
-        self.rotate(self.direction, Direction.UP)
+        self.rotate(Direction.UP)
         self.move(0, -50)
-        self.direction = Direction.UP
-
+        
     def down(self):
-        print("Player down")
-        self.rotate(self.direction, Direction.DOWN)
+        self.rotate(Direction.DOWN)
         self.move(0, 50)
-        self.direction = Direction.DOWN
-
+        
     def right(self):
-        print("Player right")
-        self.rotate(self.direction, Direction.RIGHT)
+        self.rotate(Direction.RIGHT)
         self.move(50, 0)
-        self.direction = Direction.RIGHT
-
+        
     def left(self):
-        print("Player left")
-        self.rotate(self.direction, Direction.LEFT)
+        self.rotate(Direction.LEFT)
         self.move(-50, 0)
-        self.direction = Direction.LEFT
+        
+    def cmdUp(self):
+        self.cmdFIFO.put(self.up())
+
+    def cmdDown(self):
+        self.cmdFIFO.put(self.down())
+
+    def cmdRight(self):
+        self.cmdFIFO.put(self.right())
+
+    def cmdLeft(self):
+        self.cmdFIFO.put(self.left())
