@@ -12,5 +12,5 @@ class Player(PyGSprite):
     HEIGHT = 81
     WIDTH = 100
     
-    def __init__(self, playground):
-        PyGSprite.__init__(self, IMG, 50, (SCREEN_HEIGHT - Player.HEIGHT) / 2, playground)
+    def __init__(self):
+        PyGSprite.__init__(self, IMG, 50, (SCREEN_HEIGHT - Player.HEIGHT) / 2)

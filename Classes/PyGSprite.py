@@ -2,15 +2,18 @@ import pygame
 import os
 import queue
 
+
 from Classes.Direction import Direction
 
 IMG_PATH="img"
 
 class PyGSprite(pygame.sprite.Sprite):
     SPRITE_SIZE = 100
-    def __init__(self, sprite_name, posX, posY, playground):
+    def __init__(self, sprite_name, posX, posY):
         pygame.sprite.Sprite.__init__(self)
-        self.playground = playground
+        from Classes.Context import Context
+        self.context = Context()
+        self.playground = self.context.playground
         self.image = pygame.image.load(os.path.join(IMG_PATH, sprite_name)).convert_alpha()
         self.rect = self.image.get_rect().move(posX, posY)
         self.direction = Direction.RIGHT

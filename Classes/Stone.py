@@ -1,4 +1,5 @@
 import pygame
+from Classes.Context import Context
 
 IMG = 'stone.png'
 
@@ -8,5 +9,5 @@ class Stone(PyGSprite):
 
     SIZE = 64
     
-    def __init__(self, posX, posY, playground):
-        PyGSprite.__init__(self, IMG , posX, posY, playground)
+    def __init__(self, posX, posY):
+        PyGSprite.__init__(self, IMG , posX, posY)

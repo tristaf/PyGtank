@@ -14,9 +14,10 @@ class Explosion(pygame.sprite.Sprite):
     HEIGHT = 256
     WIDTH = 256
     
-    def __init__(self, center, playground):
+    def __init__(self, center, context):
         pygame.sprite.Sprite.__init__(self)
-        self.playground = playground
+        self.context = context
+        self.playground = context.playground
         self.images = []
         self.animation_frame = 0
         for index in range(9):
