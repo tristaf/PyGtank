@@ -14,3 +14,5 @@ class Player(PyGSprite):
     
     def __init__(self):
         PyGSprite.__init__(self, IMG, 50, (SCREEN_HEIGHT - Player.HEIGHT) / 2)
+
+   

@@ -60,9 +60,26 @@ def main():
     context.addMine(mine)
     context.addSprite(mine)
     
+    TankServer('', PORT_NUM).start()
+    playground.init()
+    playground.run()
+'''
+
+def main():             
+    screen =  pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    context = Context()
+    context.setScreen(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
+    playground = Playground()
+    context.setPlayground(playground)
+    
+    player = Player("titi")
+    context.addPlayer(player)
+    context.addSprite(player)
+
     TankServer('', PORT_NUM, playground).start()
     playground.run()
-   
+'''
+
      
 
                    

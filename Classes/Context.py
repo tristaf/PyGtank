@@ -5,12 +5,12 @@ from Classes.Playground import Playground
 	
 class Context(object, metaclass=Singleton):
     def __init__(self):
-         self.sprites = pygame.sprite.Group()
-         self.enemies = pygame.sprite.Group()
-         self.player = pygame.sprite.Group()
-         self.mines = pygame.sprite.Group()
-         self.obstacles = pygame.sprite.Group()
-         self.playground:Playground = None 
+        self.sprites = pygame.sprite.Group()
+        self.enemies = pygame.sprite.Group()
+        self.player = pygame.sprite.Group()
+        self.mines = pygame.sprite.Group()
+        self.obstacles = pygame.sprite.Group()
+        self.playground:Playground = None 
 
     def setScreen(self, height, width, screen):
         self.screen = screen

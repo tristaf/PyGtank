@@ -5,10 +5,14 @@ import pygame
 from Classes.Player import Player
 
 class TankServer(object):
-    def __init__(self, host, port, playground):
+    def __init__(self, host, port):
+        from Classes.Context import Context
+        
         print("Init tank server");
-        self.player = playground.player
-        playground.linkServer(self)
+        self.context = Context()
+        self.playground = self.context.playground
+        self.player = self.context.player.sprites()[0]
+        self.playground.linkServer(self)
         self.stop = False
         self.host = host
         self.port = port
