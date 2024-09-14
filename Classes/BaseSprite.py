@@ -7,7 +7,7 @@ from Classes.Direction import Direction
 
 IMG_PATH="img"
 
-class PyGSprite(pygame.sprite.Sprite):
+class BaseSprite(pygame.sprite.Sprite):
     SPRITE_SIZE = 100
     def __init__(self, sprite_name, posX, posY):
         pygame.sprite.Sprite.__init__(self)
