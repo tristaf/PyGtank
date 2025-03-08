@@ -3,11 +3,14 @@ from Classes.Context import Context
 
 IMG = 'stone.png'
 
-from Classes.PyGSprite import PyGSprite 
+from Classes.BaseSprite import BaseSprite 
+from Classes.LayerSprite import LayersSprite
 
-class Stone(PyGSprite):
+class Stone(LayersSprite):
 
     SIZE = 64
     
     def __init__(self, posX, posY):
-        PyGSprite.__init__(self, IMG , posX, posY)
+        LayersSprite.__init__(self)
+        self.addLayer("stone", BaseSprite(IMG , posX, posY))
+        

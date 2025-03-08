@@ -5,11 +5,13 @@ from Classes.Playground import Playground
 	
 class Context(object, metaclass=Singleton):
     def __init__(self):
-        self.sprites = pygame.sprite.Group()
-        self.enemies = pygame.sprite.Group()
-        self.player = pygame.sprite.Group()
-        self.mines = pygame.sprite.Group()
-        self.obstacles = pygame.sprite.Group()
+        self.spritesGroup = pygame.sprite.Group()
+        self.enemiesGroup = pygame.sprite.Group()
+        self.enemies = []
+        self.playerGroup = pygame.sprite.Group()
+        self.player = None
+        self.minesGroup = pygame.sprite.Group()
+        self.obstaclesGroup = pygame.sprite.Group()
         self.playground:Playground = None 
 
     def setScreen(self, height, width, screen):
@@ -21,16 +23,18 @@ class Context(object, metaclass=Singleton):
         self.playground = playground
 
     def addPlayer(self, player):
-         self.player.add(player)
+         player.addToSpriteGroup(self.playerGroup)
+         self.player = player
 
     def addEnemy(self, enemy):
-         self.enemies.add(enemy)
+         enemy.addToSpriteGroup(self.enemiesGroup)
+         self.enemies.append(enemy)
 
     def addObstacle(self, obstacle):
-         self.obstacles.add(obstacle)
+         obstacle.addToSpriteGroup(self.obstaclesGroup)
 
     def addMine(self, mine):
-         self.mines.add(mine)
+         mine.addToSpriteGroup(self.minesGroup)
 
     def addSprite(self, sprite):
-         self.sprites.add(sprite)
+         sprite.addToSpriteGroup(self.spritesGroup)

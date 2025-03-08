@@ -22,35 +22,39 @@ class BaseSprite(pygame.sprite.Sprite):
         self.moved = False
         self.cmdFIFO = queue.Queue()
 
-    def rotate(self, direction):
+    def rotate(self, angle):
+        self.image = pygame.transform.rotate(self.image, angle)
+
+        
+    def turn(self, direction):
         if self.direction == Direction.RIGHT:
             if direction == Direction.LEFT:
-                self.image = pygame.transform.rotate(self.image, 180.0)
+                self.rotate(180.0)
             elif direction == Direction.UP:
-                self.image = pygame.transform.rotate(self.image, 90.0)
+                self.rotate(90.0)
             elif direction == Direction.DOWN:
-                self.image = pygame.transform.rotate(self.image, -90.0)
+                self.rotate(-90.0)
         elif self.direction == Direction.UP:
             if direction == Direction.LEFT:
-                self.image = pygame.transform.rotate(self.image, 90.0)
+                self.rotate(90.0)
             elif direction == Direction.RIGHT:
-                self.image = pygame.transform.rotate(self.image, -90.0)
+                self.rotate(-90.0)
             elif direction == Direction.DOWN:
-                self.image = pygame.transform.rotate(self.image, 180.0)
+                self.rotate(180.0)
         elif self.direction == Direction.LEFT:
             if direction == Direction.RIGHT:
-                self.image = pygame.transform.rotate(self.image, 180.0)
+                self.rotate(180.0)
             elif  direction == Direction.UP:
-                self.image = pygame.transform.rotate(self.image, -90.0)
+                self.rotate(-90.0)
             elif   direction == Direction.DOWN:
-                self.image = pygame.transform.rotate(self.image, 90.0)
+                self.rotate(90.0)
         elif self.direction == Direction.DOWN:
             if direction == Direction.LEFT:
-                self.image = pygame.transform.rotate(self.image, -90.0)
+                self.rotate(-90.0)
             elif  direction == Direction.UP:
-                self.image = pygame.transform.rotate(self.image, 180.0)
+                self.rotate(180.0)
             elif direction == Direction.RIGHT:
-                self.image = pygame.transform.rotate(self.image, 90.0)
+                self.rotate(90.0)
         self.direction = direction
         
     def fallBack(self):
@@ -73,19 +77,19 @@ class BaseSprite(pygame.sprite.Sprite):
                 cmd()
             
     def up(self):
-        self.rotate(Direction.UP)
+        self.turn(Direction.UP)
         self.move(0, -50)
-        
+    
     def down(self):
-        self.rotate(Direction.DOWN)
+        self.turn(Direction.DOWN)
         self.move(0, 50)
         
     def right(self):
-        self.rotate(Direction.RIGHT)
+        self.turn(Direction.RIGHT)
         self.move(50, 0)
         
     def left(self):
-        self.rotate(Direction.LEFT)
+        self.turn(Direction.LEFT)
         self.move(-50, 0)
         
     def cmdUp(self):

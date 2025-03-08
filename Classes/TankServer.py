@@ -11,7 +11,7 @@ class TankServer(object):
         print("Init tank server");
         self.context = Context()
         self.playground = self.context.playground
-        self.player = self.context.player.sprites()[0]
+        self.player = self.context.player
         self.playground.linkServer(self)
         self.stop = False
         self.host = host
@@ -36,6 +36,8 @@ class TankServer(object):
                 self.player.cmdRight()
             elif "left" == cmd:
                 self.player.cmdLeft()
+            elif "gun" == cmd:
+                self.player.cmdRotate("gun", 90.0)
             pygame.time.wait(500)
         self.stop = False
         

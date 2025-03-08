@@ -1,7 +1,9 @@
 import pygame
 import os
 
-from Classes.PyGSprite import PyGSprite
+
+#FIXME: use a specific classe to manage animation
+from Classes.BaseSprite import BaseSprite
 
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 1800

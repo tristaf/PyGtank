@@ -33,7 +33,7 @@ def main():
     playground = Playground()
     context.setPlayground(playground)
     
-    player = Player()
+    player = Player(50, (SCREEN_HEIGHT - 82) / 2)
     context.addPlayer(player)
     context.addSprite(player)
 

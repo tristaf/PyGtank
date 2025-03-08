@@ -19,12 +19,12 @@ class Playground:
 
 
      def init(self):
-          self.player = self.context.player.sprites()[0]
-          self.obstacles = self.context.obstacles
-          self.sprites = self.context.sprites
-          self.mines = self.context.mines
-          self.enemies = self.context.enemies
-          self.obstacles =  self.context.obstacles
+          self.playerGroup = self.context.playerGroup
+          self.player = self.context.player
+          self.obstacles = self.context.obstaclesGroup
+          self.sprites = self.context.spritesGroup
+          self.mines = self.context.minesGroup
+          self.enemies = self.context.enemiesGroup
           self.screen = self.context.screen
           self.clock = pygame.time.Clock()
           self.background = pygame.image.load(os.path.join(IMG_PATH, BACK_IMG)).convert()
@@ -42,7 +42,7 @@ class Playground:
                          sys.exit()
                
                
-               list_obstacles = pygame.sprite.spritecollide(self.player, self.obstacles, False)
+               list_obstacles = pygame.sprite.groupcollide(self.playerGroup, self.obstacles, False, False)
                if list_obstacles:
                     self.server.stopMoves()
                     self.player.fallBack()
@@ -50,15 +50,15 @@ class Playground:
                     self.sprites.draw(self.screen)
                     
 
-               explosion = pygame.sprite.spritecollide(self.player, self.mines, True)
+               mine = pygame.sprite.groupcollide(self.playerGroup, self.mines, True, True)
                
-               enemie = pygame.sprite.spritecollide(self.player, self.enemies, True)
+               enemie = pygame.sprite.groupcollide(self.playerGroup, self.enemies, True, True)
                
-               if explosion or enemie:
+               if mine or enemie:
                     self.server.stopMoves()
                     self.player.fallBack()
-                    self.sprites.remove(self.player)
-                    self.sprites.add(Explosion(self.player.rect.center))
+                    self.player.removeFromSpriteGroup(self.sprites)
+                    self.sprites.add(Explosion(self.player.getLayer("body").rect.center))
                else:
                     self.sprites.draw(self.screen)
                     

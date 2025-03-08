@@ -1,18 +1,23 @@
 import pygame
 
-from Classes.PyGSprite import PyGSprite
+from Classes.BaseSprite import BaseSprite
+from Classes.LayerSprite import LayersSprite
 
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 1800
 
-IMG = 'player.png'
+IMG_BODY = 'player_body.png'
+IMG_GUN = 'player_gun.png'
 
-class Player(PyGSprite):
+class Player(LayersSprite):
 
-    HEIGHT = 81
+    HEIGHT = 82
     WIDTH = 100
     
-    def __init__(self):
-        PyGSprite.__init__(self, IMG, 50, (SCREEN_HEIGHT - Player.HEIGHT) / 2)
+    def __init__(self, posX, posY):
+        LayersSprite.__init__(self)
+        self.addLayer("body", BaseSprite(IMG_BODY, posX, posY))
+        self.addLayer("gun", BaseSprite(IMG_GUN, posX, posY))
+        
 
    

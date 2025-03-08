@@ -2,8 +2,10 @@ import pygame
 
 IMG = 'mine.png'
 
-from Classes.PyGSprite import PyGSprite 
+from Classes.BaseSprite import BaseSprite 
+from Classes.LayerSprite import LayersSprite
 
-class Mine(PyGSprite):
+class Mine(LayersSprite):
     def __init__(self, posX, posY):
-        PyGSprite.__init__(self, IMG , posX, posY)
+        LayersSprite.__init__(self)
+        self.addLayer("mine", BaseSprite(IMG , posX, posY))

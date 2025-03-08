@@ -10,13 +10,21 @@ def Main():
 
    
     
-    for i in range(23):
+    for i in range(10):
         tank.right()
 
-    for i in range(4):
+    #tank.rotateGun()
+        
+    #for i in range(13):
+    #    tank.right()    
+
+    for i in range(10):
+        tank.right() 
+    
+    for i in range(5):
         tank.up()
     
-    for i in range(2):
+    for i in range(9):
         tank.down()
 
     for i in range(10):

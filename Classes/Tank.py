@@ -39,6 +39,9 @@ class Tank():
     def left(self):
         self.commands.append('left')
 
+    def rotateGun(self):
+        self.commands.append('gun')
+        
     def end(self):
         self.command = ';'.join(self.commands)
         self.send = True
