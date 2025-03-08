@@ -21,9 +21,9 @@ class Playground:
      def init(self):
           self.playerGroup = self.context.playerGroup
           self.player = self.context.player
-          self.obstacles = self.context.obstaclesGroup
-          self.sprites = self.context.spritesGroup
-          self.mines = self.context.minesGroup
+          self.obstacles = self.context.obstacles
+          self.sprites = self.context.sprites
+          self.mines = self.context.mines
           self.enemies = self.context.enemiesGroup
           self.screen = self.context.screen
           self.clock = pygame.time.Clock()

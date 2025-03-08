@@ -1,17 +1,18 @@
 import pygame
 from Classes.Singleton import Singleton
 from Classes.Playground import Playground
-
+from Classes.BaseSprite import BaseSprite
+from Classes.LayersSprite import LayersSprite
 	
 class Context(object, metaclass=Singleton):
     def __init__(self):
-        self.spritesGroup = pygame.sprite.Group()
+        self.sprites = pygame.sprite.Group()
         self.enemiesGroup = pygame.sprite.Group()
         self.enemies = []
         self.playerGroup = pygame.sprite.Group()
         self.player = None
-        self.minesGroup = pygame.sprite.Group()
-        self.obstaclesGroup = pygame.sprite.Group()
+        self.mines = pygame.sprite.Group()
+        self.obstacles = pygame.sprite.Group()
         self.playground:Playground = None 
 
     def setScreen(self, height, width, screen):
@@ -31,10 +32,13 @@ class Context(object, metaclass=Singleton):
          self.enemies.append(enemy)
 
     def addObstacle(self, obstacle):
-         obstacle.addToSpriteGroup(self.obstaclesGroup)
+         self.obstacles.add(obstacle)
 
     def addMine(self, mine):
-         mine.addToSpriteGroup(self.minesGroup)
+         self.mines.add(mine)
 
     def addSprite(self, sprite):
-         sprite.addToSpriteGroup(self.spritesGroup)
+        if isinstance(sprite, LayersSprite):
+            sprite.addToSpriteGroup(self.sprites)
+        elif isinstance(sprite, BaseSprite):
+            self.sprites.add(sprite)

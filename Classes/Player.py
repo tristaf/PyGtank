@@ -1,7 +1,7 @@
 import pygame
 
 from Classes.BaseSprite import BaseSprite
-from Classes.LayerSprite import LayersSprite
+from Classes.LayersSprite import LayersSprite
 
 SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 1800

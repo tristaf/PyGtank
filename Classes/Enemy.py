@@ -4,7 +4,7 @@ from Classes.Context import Context
 IMG = 'enemy.png'
 
 from Classes.BaseSprite import BaseSprite 
-from Classes.LayerSprite import LayersSprite
+from Classes.LayersSprite import LayersSprite
 
 class Enemy(LayersSprite):
 
